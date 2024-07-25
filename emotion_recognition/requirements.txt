@@ -1,0 +1,13 @@
+# Basic dependencies
+numpy
+pandas
+h5py
+scikit-learn
+matplotlib
+
+# Deep learning framework
+tensorflow==2.16.1
+keras==3.0.0
+
+# Image preprocessing and augmentation
+opencv-python
