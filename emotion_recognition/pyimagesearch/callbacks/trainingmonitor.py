@@ -1,4 +1,3 @@
-
 from tensorflow.keras.callbacks import Callback
 import matplotlib.pyplot as plt
 import numpy as np
@@ -7,6 +6,7 @@ import os
 
 class TrainingMonitor(Callback):
     def __init__(self, figPath, jsonPath=None, startAt=0):
+        print(f'start at: {startAt}')
         super(TrainingMonitor, self).__init__()
         self.figPath = figPath
         self.jsonPath = jsonPath
@@ -34,13 +34,24 @@ class TrainingMonitor(Callback):
             N = np.arange(0, len(self.H["loss"]))
             plt.style.use("ggplot")
             plt.figure()
-            plt.plot(N, self.H["loss"], label="train_loss")
-            plt.plot(N, self.H["val_loss"], label="val_loss")
-            plt.plot(N, self.H["accuracy"], label="train_acc")
-            plt.plot(N, self.H["val_accuracy"], label="val_acc")
+
+            # Plot loss on the left y-axis
+            plt.plot(N, self.H["loss"], label="train_loss", color="blue")
+            plt.plot(N, self.H["val_loss"], label="val_loss", color="black")
+
+            # Plot accuracy on the right y-axis
+            ax1 = plt.gca()
+            ax2 = ax1.twinx()
+            ax2.plot(N, self.H["accuracy"], label="train_acc", color="red")
+            ax2.plot(N, self.H["val_accuracy"], label="val_acc", color="green")
+
+            # Set labels and legends
+            ax1.set_xlabel("Epoch #")
+            ax1.set_ylabel("Loss")
+            ax2.set_ylabel("Accuracy")
+            ax1.legend(loc="upper left")
+            ax2.legend(loc="upper right")
+
             plt.title("Training Loss and Accuracy [Epoch {}]".format(epoch))
-            plt.xlabel("Epoch #")
-            plt.ylabel("Loss/Accuracy")
-            plt.legend()
             plt.savefig(self.figPath)
             plt.close()
