@@ -6,8 +6,9 @@ scikit-learn
 matplotlib
 
 # Deep learning framework
-tensorflow==2.16.1
-keras==3.0.0
+tensorflow==2.17.0
+keras==3.4.1
 
 # Image preprocessing and augmentation
 opencv-python
+imutils
